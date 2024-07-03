@@ -9,6 +9,9 @@ else
     sudo apt install virtualenv -y
     sudo apt install python3-venv -y
     sudo apt install python3-pip -y
+    sudo apt install maven -y
+    sudo apt install spring -y
+    sudo apt install gradle -y
     sudo apt install nginx -y
     sudo apt install gunicorn -y
 fi
