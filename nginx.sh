@@ -14,3 +14,8 @@ sudo systemctl restart nginx.service
 echo "Nginx has been started"
 
 sudo systemctl status nginx.service
+
+java -jar target/MyMart-0.0.1-SNAPSHOT.jar
+nohup java -jar target/MyMart-0.0.1-SNAPSHOT.jar > spring_boot.log 2>&1 &
+jobs -l
+ps -ef | grep "MyMart-0.0.1-SNAPSHOT.jar"
