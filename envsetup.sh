@@ -15,6 +15,7 @@ else
     sudo apt install gradle -y
     sudo apt install nginx -y
     sudo apt install gunicorn -y
+    sudo apt install supervisor -y
 fi
 
     python3 -m venv yeswanth
