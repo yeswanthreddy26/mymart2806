@@ -9,11 +9,11 @@ chmod 710 /var/lib/jenkins/workspace/mymart
 
 sudo sed -i 's/80 default_server/81 default_server/g' /etc/nginx/sites-enabled/default
 
-sudo systemctl restart nginx.service
+sudo service start nginx
 
 echo "Nginx has been started"
 
-sudo systemctl status nginx.service
+sudo service status nginx
 
 java -jar target/MyMart-0.0.1-SNAPSHOT.jar
 nohup java -jar target/MyMart-0.0.1-SNAPSHOT.jar > spring_boot.log 2>&1 &
