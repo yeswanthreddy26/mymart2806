@@ -7,7 +7,7 @@ $PWD
 source yeswanth/bin/activate
 pip3 install gunicorn
 
- mvn clean package -DskipTests
+mvn package -DskipTests
 java -jar target/MyMart-0.0.1-SNAPSHOT.jar
 
 sudo rm /etc/systemd/system/gunicorn.service
