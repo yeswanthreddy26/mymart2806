@@ -59,37 +59,37 @@ case "$(uname)" in
   Darwin*) darwin=true
     # Use /usr/libexec/java_home if available, otherwise fall back to /Library/Java/Home
     # See https://developer.apple.com/library/mac/qa/qa1170/_index.html
-    if [ -z "$JAVA_HOME" ]; then
+    if [ -z "$JAVA_OPTS" ]; then
       if [ -x "/usr/libexec/java_home" ]; then
-        JAVA_HOME="$(/usr/libexec/java_home)"; export JAVA_HOME
+        JAVA_OPTS="$(/usr/libexec/java_home)"; export JAVA_OPTS
       else
-        JAVA_HOME="/Library/Java/Home"; export JAVA_HOME
+        JAVA_OPTS="/Library/Java/Home"; export JAVA_OPTS
       fi
     fi
     ;;
 esac
 
-if [ -z "$JAVA_HOME" ] ; then
+if [ -z "$JAVA_OPTS" ] ; then
   if [ -r /etc/gentoo-release ] ; then
-    JAVA_HOME=$(java-config --jre-home)
+    JAVA_OPTS=$(java-config --jre-home)
   fi
 fi
 
 # For Cygwin, ensure paths are in UNIX format before anything is touched
 if $cygwin ; then
-  [ -n "$JAVA_HOME" ] &&
-    JAVA_HOME=$(cygpath --unix "$JAVA_HOME")
+  [ -n "$JAVA_OPTS" ] &&
+    JAVA_OPTS=$(cygpath --unix "$JAVA_OPTS")
   [ -n "$CLASSPATH" ] &&
     CLASSPATH=$(cygpath --path --unix "$CLASSPATH")
 fi
 
 # For Mingw, ensure paths are in UNIX format before anything is touched
 if $mingw ; then
-  [ -n "$JAVA_HOME" ] && [ -d "$JAVA_HOME" ] &&
-    JAVA_HOME="$(cd "$JAVA_HOME" || (echo "cannot cd into $JAVA_HOME."; exit 1); pwd)"
+  [ -n "$JAVA_OPTS" ] && [ -d "$JAVA_OPTS" ] &&
+    JAVA_OPTS="$(cd "$JAVA_OPTS" || (echo "cannot cd into $JAVA_OPTS."; exit 1); pwd)"
 fi
 
-if [ -z "$JAVA_HOME" ]; then
+if [ -z "$JAVA_OPTS" ]; then
   javaExecutable="$(which javac)"
   if [ -n "$javaExecutable" ] && ! [ "$(expr "\"$javaExecutable\"" : '\([^ ]*\)')" = "no" ]; then
     # readlink(1) is not available as standard on Solaris 10.
@@ -103,19 +103,19 @@ if [ -z "$JAVA_HOME" ]; then
       fi
       javaHome="$(dirname "\"$javaExecutable\"")"
       javaHome=$(expr "$javaHome" : '\(.*\)/bin')
-      JAVA_HOME="$javaHome"
-      export JAVA_HOME
+      JAVA_OPTS="$javaHome"
+      export JAVA_OPTS
     fi
   fi
 fi
 
 if [ -z "$JAVACMD" ] ; then
-  if [ -n "$JAVA_HOME"  ] ; then
-    if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
+  if [ -n "$JAVA_OPTS"  ] ; then
+    if [ -x "$JAVA_OPTS/jre/sh/java" ] ; then
       # IBM's JDK on AIX uses strange locations for the executables
-      JAVACMD="$JAVA_HOME/jre/sh/java"
+      JAVACMD="$JAVA_OPTS/jre/sh/java"
     else
-      JAVACMD="$JAVA_HOME/bin/java"
+      JAVACMD="$JAVA_OPTS/bin/java"
     fi
   else
     JAVACMD="$(\unset -f command 2>/dev/null; \command -v java)"
@@ -123,13 +123,13 @@ if [ -z "$JAVACMD" ] ; then
 fi
 
 if [ ! -x "$JAVACMD" ] ; then
-  echo "Error: JAVA_HOME is not defined correctly." >&2
+  echo "Error: JAVA_OPTS is not defined correctly." >&2
   echo "  We cannot execute $JAVACMD" >&2
   exit 1
 fi
 
-if [ -z "$JAVA_HOME" ] ; then
-  echo "Warning: JAVA_HOME environment variable is not set."
+if [ -z "$JAVA_OPTS" ] ; then
+  echo "Warning: JAVA_OPTS environment variable is not set."
 fi
 
 # traverses directory structure from process work directory to filesystem root
@@ -238,11 +238,11 @@ else
         if [ -e "$javaSource" ]; then
             if [ ! -e "$javaClass" ]; then
                 log " - Compiling MavenWrapperDownloader.java ..."
-                ("$JAVA_HOME/bin/javac" "$javaSource")
+                ("$JAVA_OPTS/bin/javac" "$javaSource")
             fi
             if [ -e "$javaClass" ]; then
                 log " - Running MavenWrapperDownloader.java ..."
-                ("$JAVA_HOME/bin/java" -cp .mvn/wrapper MavenWrapperDownloader "$wrapperUrl" "$wrapperJarPath") || rm -f "$wrapperJarPath"
+                ("$JAVA_OPTS/bin/java" -cp .mvn/wrapper MavenWrapperDownloader "$wrapperUrl" "$wrapperJarPath") || rm -f "$wrapperJarPath"
             fi
         fi
     fi
@@ -284,8 +284,8 @@ MAVEN_OPTS="$(concat_lines "$MAVEN_PROJECTBASEDIR/.mvn/jvm.config") $MAVEN_OPTS"
 
 # For Cygwin, switch paths to Windows format before running java
 if $cygwin; then
-  [ -n "$JAVA_HOME" ] &&
-    JAVA_HOME=$(cygpath --path --windows "$JAVA_HOME")
+  [ -n "$JAVA_OPTS" ] &&
+    JAVA_OPTS=$(cygpath --path --windows "$JAVA_OPTS")
   [ -n "$CLASSPATH" ] &&
     CLASSPATH=$(cygpath --path --windows "$CLASSPATH")
   [ -n "$MAVEN_PROJECTBASEDIR" ] &&
