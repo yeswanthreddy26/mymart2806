@@ -10,9 +10,9 @@ pip3 install gunicorn
 mvn package -DskipTests
 java -jar target/MyMart-0.0.1-SNAPSHOT.jar
 
-sudo rm /etc/systemd/system/gunicorn.service
-sudo cp -rf gunicorn.socket /etc/systemd/system/
-sudo cp -rf gunicorn.service /etc/systemd/system/
+#sudo rm /etc/systemd/system/gunicorn.service
+#sudo cp -rf gunicorn.socket /etc/systemd/system/
+#sudo cp -rf gunicorn.service /etc/systemd/system/
 
 echo "$USER"
 echo "$PWD"
